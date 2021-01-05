@@ -1,1 +1,16 @@
 # yaml.yaml is a monad programming language entirely based around YAML files
+
+# based on https://yaml.org/spec/1.2/spec.html#id2763452
+- node:
+  - scalar
+  - sequence
+  - mapping
+
+# we define a mapping between YAML and lambda calculus
+# which was already used to define our first monadic context: node
+# https://en.wikipedia.org/wiki/Lambda_calculus
+- term:
+  - node:
+      scalar: variable
+      sequence: abstraction
+      mapping: application
