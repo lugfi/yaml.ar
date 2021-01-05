@@ -7,10 +7,14 @@ node:
 - mapping
 
 # we define a mapping between YAML and lambda calculus
-# which was already used to define our first monadic context: node
 # https://en.wikipedia.org/wiki/Lambda_calculus
 term:
+- variable
+- application
+- abstraction
 - node:
     scalar: variable
+    # left-associative (s0 s1 ...)
     sequence: application
+    # commutative (λkey.value) set
     mapping: abstraction
