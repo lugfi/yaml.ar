@@ -18,3 +18,9 @@ term:
     sequence: application
     # commutative (λkey.value) set
     mapping: abstraction
+
+# as an example, the Peano numbers
+peano:
+- zero
+- succ:
+  - prev: peano
