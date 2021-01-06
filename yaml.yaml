@@ -22,8 +22,20 @@ term:
 # as an example, the Peano numbers
 # https://wiki.haskell.org/Peano_numbers
 peano:
-- zero
-- succ: peano
+  0:
+  succ: peano
+  add:
+  - m
+  - n
+  - - - 0
+      - n
+      - n
+    - - succ: m
+      - n
+      - - succ # TODO this breaks value independence
+        - - add
+          - m
+          - n
 
 # as an example, the Church encoding
 # https://en.wikipedia.org/wiki/Church_encoding
@@ -44,5 +56,5 @@ church:
   - m
   - n
   - - n
-    - - succ
+    - - succ # TODO this breaks value independence
       - m
