@@ -20,7 +20,29 @@ term:
     mapping: abstraction
 
 # as an example, the Peano numbers
+# https://wiki.haskell.org/Peano_numbers
 peano:
 - zero
-- succ:
-  - prev: peano
+- succ: peano
+
+# as an example, the Church encoding
+# https://en.wikipedia.org/wiki/Church_encoding
+church:
+  0:
+  - f
+  - x
+  - x
+  succ:
+  - n
+  - f
+  - x
+  - - f
+    - - n
+      - f
+      - x
+  add:
+  - m
+  - n
+  - - n
+    - - succ
+      - m
