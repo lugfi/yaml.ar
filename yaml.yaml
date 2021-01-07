@@ -46,14 +46,18 @@ node:
 - - n
   - f
   - x
+
+# TODO review and propose better syntax
 # def add = λm.λn.(m succ n)
 { m: , n: }:
-- m
-- succ # TODO point to the succ function
-- n
+- { succ: , m: , n: }:
+  - m
+  - succ
+  - n
+- { n: , f: , x: }
 
 # https://medium.com/@marinalimeira/understanding-conditional-expressions-with-%CE%BB-calculus-e25393fef86c
-# def cond = λexpr1.λexpr2.λc.(c x y)
+# def cond = λx.λy.λc.(c x y)
 { x: , y: , c: }:
 - c
 - x
