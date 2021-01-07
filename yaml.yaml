@@ -2,78 +2,86 @@
 
 # https://en.wikipedia.org/wiki/Lambda_calculus
 # http://www.cs.tau.ac.il/~msagiv/courses/apl12/etc.pdf
-? term
-: { variable: , abstraction: , application: }
+term:
+  variable:
+  abstraction:
+  application:
+
+# def list = λf.(f head tail)
+list:
+- ~
+- head
+- tail
 
 # and based on https://yaml.org/spec/1.2/spec.html#id2763452
-? node
-: { scalar: , sequence: , mapping: }
-? mapping
-: { key: , value: }
-
-# def identity = λx.x
-? ~
-: { x: }:
-  - x
+node:
+  scalar:
+  sequence:
+  mapping:
+  ? key:
+    value:
 
 # we define a mapping between YAML and lambda calculus
-? yaml.yaml
-: scalar: variable
+yaml.yaml:
+  scalar: variable
   # left-associative (v0 v1 ...)
   sequence: application
+  # TODO ~ is the fixed point combinator??
   # http://dev.stephendiehl.com/fun/003_lambda_calculus.html#let
   # ((λk0.λk1...(~)) v0 v1 ...)
   mapping: TODO review
 
-# def true = λfirst.λsecond.first
-? true
-: { first: , second: }:
+bool:
+? { first: , second: }
+: # def true = λfirst.λsecond.first
+  true: first
+  # def false = λfirst.λsecond.second
+  false: second
+  # https://medium.com/@marinalimeira/understanding-conditional-expressions-with-%CE%BB-calculus-e25393fef86c
+  # def cond = λfirst.λsecond.λc.(c first second)
+  cond:
+  - ~
   - first
-# def false = λfirst.λsecond.second
-? false
-: { first: , second: }:
   - second
+  # def and = λfirst.λsecond.(first second false)
+  and:
+  - first
+  - second
+  - false
 
 # https://en.wikipedia.org/wiki/Church_encoding
-# def 0 = λf.λx.x
-? 0
-: { f: , x: }:
-  - x
-# def succ = λn.λf.λx.(f (n f x))
-? succ
-: { n: , f: , x: }:
-  - f
-  - - n
-    - f
-    - x
-# def add = λm.λn.λf.λx.(m f (n f x))
-? add
-: { m: , n: , f: , x: }:
-  - m
-  - f
-  - - n
-    - f
-    - x
-# def add' = λm.λn.(m succ n)
-? add'
-: { m: , n: }:
-  - m
+church:
+? { f: , x: }
+: # def 0 = λf.λx.x
+  0: x
+  1:
   - succ
-  - n
+  - 0
 
-# https://medium.com/@marinalimeira/understanding-conditional-expressions-with-%CE%BB-calculus-e25393fef86c
-# def cond = λx.λy.λc.(c x y)
-? cond
-: { x: , y: , c: }:
-  - c
-  - x
-  - y
-# def and = λx.λy.(x y false)
-? and
-: { x: , y: }:
-  - x
-  - y
-  - false
+  # def succ = λn.λf.λx.(f (n f x))
+  succ:
+    ? { n: }
+    : - f
+      - - n
+        - f
+        - x
+
+  # def add = λm.λn.λf.λx.(m f (n f x))
+  add:
+    ? { m: , n: }
+    : - m
+      - f
+      - - n
+        - f
+        - x
+
+  # def add' = λm.λn.(m succ n)
+  add':
+    ? { m: , n: }
+    : - m
+      - succ
+      - n
+
 
 # https://en.wikipedia.org/wiki/Fixed-point_combinator#Fixed-point_combinators_in_lambda_calculus
 # def Y = λf.((λx.(f (x x))) (λx.(f (x x))))
