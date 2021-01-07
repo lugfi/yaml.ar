@@ -1,23 +1,21 @@
 # yaml.yaml is a monad programming language entirely based around YAML files
 
-# based on https://yaml.org/spec/1.2/spec.html#id2763452
-node:
-- scalar
-- sequence
-- mapping
-
-# we define a mapping between YAML and lambda calculus
 # https://en.wikipedia.org/wiki/Lambda_calculus
+# (λterm.(variable application abstraction))
 term:
 - variable
 - application
 - abstraction
-- node:
-    scalar: variable
+
+# and based on https://yaml.org/spec/1.2/spec.html#id2763452
+# we define a mapping between YAML and lambda calculus
+# (λnode.((λscalar.variable) (λscalar.application) (λscalar.abstraction))
+node:
+  scalar: variable
     # left-associative (s0 s1 ...)
-    sequence: application
+  sequence: application
     # commutative (λkey.value) set
-    mapping: abstraction
+  mapping: abstraction
 
 # as an example, the Peano numbers
 # https://wiki.haskell.org/Peano_numbers
@@ -58,3 +56,21 @@ church:
   - - n
     - - succ # TODO this breaks value independence
       - m
+
+# https://medium.com/@marinalimeira/understanding-conditional-expressions-with-%CE%BB-calculus-e25393fef86c
+# def cond = λexpr1.λexpr2.λc.((c expr1) expr2)
+{expr1: , expr2:, c:}:
+- - c
+  - expr1
+- expr2
+# def true = λfirst.λsecond.first
+{first: , second:}:
+- first
+# def false = λfirst.λsecond.second
+{first: , second:}:
+- second
+# def and = λx.λy.((x y) false)
+{x: , y:}:
+- - x
+  - y
+- false
