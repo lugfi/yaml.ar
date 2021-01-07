@@ -1,36 +1,32 @@
 # yaml.yaml is a monad programming language entirely based around YAML files
 
 # https://en.wikipedia.org/wiki/Lambda_calculus
+# http://www.cs.tau.ac.il/~msagiv/courses/apl12/etc.pdf
+# ((λterm.(λvariable.λapplication.λabstraction) term)
 ? term
-: { variable: , application: , abstraction: }
+: { variable: , abstraction: , application: }
 
 # and based on https://yaml.org/spec/1.2/spec.html#id2763452
 ? node
 : { scalar: , sequence: , mapping: }
-# TODO keys and values
 ? mapping
 : { key: , value: }
+
+# def identity = λx.x
+? ~
+: { x: }:
+  - x
 
 # we define a mapping between YAML and lambda calculus
 ? yaml.yaml
 : ? { scalar: , sequence: , mapping: }
   : ? term
     : variable: scalar
-      # left-associative (s0 s1 ...)
+      # left-associative (v0 v1 ...)
       application: sequence
-      # TODO this is completely wrong but you get the idea
-      abstraction:
-      - yaml.yaml
-      - - mapping
-        - value
-      - { key: }:
-        - mapping
-        - key
-
-# def identity = λx.x
-? ~
-: { x: }:
-  - x
+      # http://dev.stephendiehl.com/fun/003_lambda_calculus.html#let
+      # ((λk0.~)v0 (λk1.~)v1 ...)
+      abstraction: TODO review
 
 # def true = λfirst.λsecond.first
 ? true
