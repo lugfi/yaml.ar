@@ -50,14 +50,12 @@ bool:
 
 # https://en.wikipedia.org/wiki/Church_encoding
 number:
-  # def 0 = λf.λx.x
-  0:
-  #  1:
-  #  - succ
-  #  - 0
+? { f: , x: }
+: # def 0 = λf.λx.x
+  0: x
   # def succ = λn.λf.λx.(f (n f x))
   succ:
-    ? { n: , f: , x: }
+    ? { n: }
     : - f
       -   - n
           - f
