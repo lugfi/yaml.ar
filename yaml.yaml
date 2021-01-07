@@ -63,3 +63,15 @@ node:
 - x
 - y
 - false
+
+# https://en.wikipedia.org/wiki/Fixed-point_combinator#Fixed-point_combinators_in_lambda_calculus
+# def Y = λf.((λx.(f (x x))) (λx.(f (x x))))
+{ f: }:
+- { x: }:
+  - f
+  - - x
+    - x
+- { x: }:
+  - f
+  - - x
+    - x
