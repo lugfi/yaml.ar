@@ -9,9 +9,9 @@ term:
 
 # def list = λf.(f head tail)
 list:
-- ~
-- head
-- tail
+  - ~
+  - head
+  - tail
 
 # and based on https://yaml.org/spec/1.2/spec.html#id2763452
 node:
@@ -32,49 +32,44 @@ yaml.yaml:
   mapping: TODO review
 
 bool:
-? { first: , second: }
-: # def true = λfirst.λsecond.first
-  true: first
-  # def false = λfirst.λsecond.second
-  false: second
+  true:
+  false:
   # https://medium.com/@marinalimeira/understanding-conditional-expressions-with-%CE%BB-calculus-e25393fef86c
   # def cond = λfirst.λsecond.λc.(c first second)
   cond:
-  - ~
-  - first
-  - second
+    ? { first: , second: }
+    : - ~
+      - first
+      - second
   # def and = λfirst.λsecond.(first second false)
   and:
-  - first
-  - second
-  - false
+    ? { first: , second: }
+    : - first
+      - second
+      - false
 
 # https://en.wikipedia.org/wiki/Church_encoding
-church:
-? { f: , x: }
-: # def 0 = λf.λx.x
-  0: x
-  1:
-  - succ
-  - 0
-
+number:
+  # def 0 = λf.λx.x
+  0:
+  #  1:
+  #  - succ
+  #  - 0
   # def succ = λn.λf.λx.(f (n f x))
   succ:
-    ? { n: }
+    ? { n: , f: , x: }
     : - f
-      - - n
-        - f
-        - x
-
+      -   - n
+          - f
+          - x
   # def add = λm.λn.λf.λx.(m f (n f x))
   add:
     ? { m: , n: }
     : - m
       - f
-      - - n
-        - f
-        - x
-
+      -   - n
+          - f
+          - x
   # def add' = λm.λn.(m succ n)
   add':
     ? { m: , n: }
@@ -86,13 +81,13 @@ church:
 # https://en.wikipedia.org/wiki/Fixed-point_combinator#Fixed-point_combinators_in_lambda_calculus
 # def Y = λf.((λx.(f (x x))) (λx.(f (x x))))
 # TODO disambiguate YAML falsy values (e.g Y vs true)
-? Y
-: { f: }:
-  - { x: }:
-    - f
-    - - x
-      - x
-  - { x: }:
-    - f
-    - - x
-      - x
+Y:
+? { f: }
+: - ? { x: }
+    : - f
+      -   - x
+          - x
+  - ? { x: }
+    : - f
+      -   - x
+          - x
