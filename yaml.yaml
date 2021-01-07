@@ -2,7 +2,6 @@
 
 # https://en.wikipedia.org/wiki/Lambda_calculus
 # http://www.cs.tau.ac.il/~msagiv/courses/apl12/etc.pdf
-# ((λterm.(λvariable.λapplication.λabstraction) term)
 ? term
 : { variable: , abstraction: , application: }
 
@@ -19,14 +18,12 @@
 
 # we define a mapping between YAML and lambda calculus
 ? yaml.yaml
-: ? { scalar: , sequence: , mapping: }
-  : ? term
-    : variable: scalar
-      # left-associative (v0 v1 ...)
-      application: sequence
-      # http://dev.stephendiehl.com/fun/003_lambda_calculus.html#let
-      # ((λk0.~)v0 (λk1.~)v1 ...)
-      abstraction: TODO review
+: scalar: variable
+  # left-associative (v0 v1 ...)
+  sequence: application
+  # http://dev.stephendiehl.com/fun/003_lambda_calculus.html#let
+  # ((λk0.λk1...(~)) v0 v1 ...)
+  mapping: TODO review
 
 # def true = λfirst.λsecond.first
 ? true
