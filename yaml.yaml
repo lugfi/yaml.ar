@@ -7,25 +7,21 @@
 # and based on https://yaml.org/spec/1.2/spec.html#id2763452
 ? node
 : { scalar: , sequence: , mapping: }
+? mapping
+: { key: , value: }
 
 # we define a mapping between YAML and lambda calculus
 ? yaml.yaml
-: { n: }
-  - - { scalar: }:
-      - term
-      - variable
-      - scalar
-      # left-associative (s0 s1 ...)
-    - { sequence: }:
-      - term
-      - application
-      - sequence
-      # TODO define this better to reflect current document
-    - { mapping: }:
-      - term
-      - abstraction
-      - mapping
+: { n: }:
   - n
+  - variable: scalar
+    # left-associative (s0 s1 ...)
+    application: sequence
+    # TODO this is completely wrong but you get the idea
+    abstraction:
+      - mapping
+      - key
+  - term
 
 # def identity = λx.x
 ? ~
