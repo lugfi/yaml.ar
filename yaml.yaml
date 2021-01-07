@@ -17,60 +17,49 @@ node:
     # commutative (λkey.value) set
   mapping: abstraction
 
-# as an example, the Peano numbers
-# https://wiki.haskell.org/Peano_numbers
-peano:
-  0:
-  succ: peano
-  add:
-  - m
-  - n
-  - - - 0
-      - n
-      - n
-    - - succ: m
-      - n
-      - - succ # TODO this breaks value independence
-        - - add
-          - m
-          - n
+# def identity = λx.x
+# TODO consider `~: ~`, `~`
+{ x: }:
+- x
 
-# as an example, the Church encoding
-# https://en.wikipedia.org/wiki/Church_encoding
-church:
-  0:
-  - f
-  - x
-  - x
-  succ:
-  - n
-  - f
-  - x
-  - - f
-    - - n
-      - f
-      - x
-  add:
-  - m
-  - n
-  - - n
-    - - succ # TODO this breaks value independence
-      - m
-
-# https://medium.com/@marinalimeira/understanding-conditional-expressions-with-%CE%BB-calculus-e25393fef86c
-# def cond = λexpr1.λexpr2.λc.((c expr1) expr2)
-{expr1: , expr2:, c:}:
-- - c
-  - expr1
-- expr2
 # def true = λfirst.λsecond.first
-{first: , second:}:
+{ first: , second: }:
 - first
 # def false = λfirst.λsecond.second
-{first: , second:}:
+{ first: , second: }:
 - second
-# def and = λx.λy.((x y) false)
-{x: , y:}:
-- - x
-  - y
+
+# https://en.wikipedia.org/wiki/Church_encoding
+# def 0 = λf.λx.x
+{ f: , x: }:
+- x
+# def succ = λn.λf.λx.(f (n f x))
+{ n: , f: , x: }:
+- f
+- - n
+  - f
+  - x
+# def add = λm.λn.λf.λx.(m f (n f x))
+{ m: , n: , f: , x: }:
+- m
+- f
+- - n
+  - f
+  - x
+# def add = λm.λn.(m succ n)
+{ m: , n: }:
+- m
+- succ # TODO point to the succ function
+- n
+
+# https://medium.com/@marinalimeira/understanding-conditional-expressions-with-%CE%BB-calculus-e25393fef86c
+# def cond = λexpr1.λexpr2.λc.(c x y)
+{ x: , y: , c: }:
+- c
+- x
+- y
+# def and = λx.λy.(x y false)
+{ x: , y: }:
+- x
+- y
 - false
