@@ -21,7 +21,7 @@ node:
 term:
   variable:
   abstraction:
-    x:
+    x: variable
     term:
   application:
 # https://en.wikipedia.org/wiki/Lambda_calculus
@@ -65,16 +65,3 @@ term:
 # should be considered thoroughly
 # an assumption was necessary for the sake of organization
 # https://www.cs.virginia.edu/~evans/cs655/readings/smalltalk.html
-
-# def Y = λf.((λx.(f (x x))) (λx.(f (x x))))
-'Y':
-  ? f:
-  : - ? x:
-      : - f
-        -   - x
-            - x
-    - ? x:
-      : - f
-        -   - x
-            - x
-# https://en.wikipedia.org/wiki/Fixed-point_combinator#Fixed-point_combinators_in_lambda_calculus
