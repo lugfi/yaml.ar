@@ -1,79 +1,43 @@
-# yaml.yaml is a monad programming language entirely based around YAML files
+# the yaml.yaml interpreter written in yaml.yaml
+# this tries to be a comparison to how lisp dialects interpreters are written
 
-# https://en.wikipedia.org/wiki/Lambda_calculus
-# http://www.cs.tau.ac.il/~msagiv/courses/apl12/etc.pdf
-term:
-  variable:
-  abstraction:
-  application:
-
-# def list = λf.(f head tail)
-list:
-  - ~
-  - head
-  - tail
-
-# and based on https://yaml.org/spec/1.2/spec.html#id2763452
+# we demonstrate that certain YAML structures
 node:
   scalar:
   sequence:
   mapping:
     ? key:
     : value:
+# https://yaml.org/spec/1.2/spec.html#id2763452
 
-# we define a mapping between YAML and lambda calculus
-yaml.yaml:
-  scalar: variable
-  # left-associative (v0 v1 ...)
-  sequence: application
-  # TODO ~ is the fixed point combinator??
-  # http://dev.stephendiehl.com/fun/003_lambda_calculus.html#let
-  # ((λk0.λk1...(~)) v0 v1 ...)
-  mapping: TODO review
+# can be mapped to lambda calculus terms
+term:
+  variable:
+  abstraction:
+  application:
+# https://en.wikipedia.org/wiki/Lambda_calculus
+# http://www.cs.tau.ac.il/~msagiv/courses/apl12/etc.pdf
 
-bool:
-  true:
-  false:
-  # https://medium.com/@marinalimeira/understanding-conditional-expressions-with-%CE%BB-calculus-e25393fef86c
-  # def cond = λfirst.λsecond.λc.(c first second)
-  cond:
-    ? { first: , second: }
-    : - ~
-      - first
-      - second
-  # def and = λfirst.λsecond.(first second false)
-  and:
-    ? { first: , second: }
-    : - first
-      - second
-      - false
-
-# https://en.wikipedia.org/wiki/Church_encoding
-number:
-  ? { f: , x: }
-  : # def 0 = λf.λx.x
-    0: x
-    # def succ = λn.λf.λx.(f (n f x))
-    succ:
-      ? { n: }
-      : - f
-        -   - n
-            - f
-            - x
-    # def add = λm.λn.λf.λx.(m f (n f x))
-    add:
-      ? { m: , n: }
-      : - m
-        - f
-        -   - n
-            - f
-            - x
-    # def add' = λm.λn.(m succ n)
-    add':
-      ? { m: , n: }
-      : - m
-        - succ
-        - n
+# this document is proof that this homomorphism
+# (given that you like what you read)
+# is very terse as a general-purpose language
+# case scalar: variable
+# case sequence: left-associative application
+# case mapping:
+#  case all keys are scalars: TODO
+#  case single kvp:
+#   case ~ key: ???
+#   case scalar key:
+#    case ~ value: TODO
+#    case scalar value: TODO
+#    case scalar value: TODO
+#    case scalar value: TODO
+#   case sequence key: ???
+#   case mapping key: TODO
+# http://dev.stephendiehl.com/fun/003_lambda_calculus.html#let
+# left-associative (v0 v1 ...)
+# TODO ~ is the fixed point combinator??
+# ((λk0.λk1...(~)) v0 v1 ...)
 
 # https://en.wikipedia.org/wiki/Fixed-point_combinator#Fixed-point_combinators_in_lambda_calculus
 # def Y = λf.((λx.(f (x x))) (λx.(f (x x))))
