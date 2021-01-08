@@ -39,7 +39,13 @@ term:
 # TODO ~ is the fixed point combinator??
 # ((λk0.λk1...(~)) v0 v1 ...)
 
-# https://en.wikipedia.org/wiki/Fixed-point_combinator#Fixed-point_combinators_in_lambda_calculus
+# the files structure is not yet formalized,
+# but it can be thought of as a mapping between
+# a key in this file and the name in {name}.yaml.yaml
+
+# the integration with an OS should be considered thoroughly
+# but an assumption was necessary for the sake of organization
+
 # def Y = λf.((λx.(f (x x))) (λx.(f (x x))))
 # TODO disambiguate YAML falsy values (e.g Y vs true)
 Y:
@@ -52,3 +58,4 @@ Y:
       : - f
         -   - x
             - x
+# https://en.wikipedia.org/wiki/Fixed-point_combinator#Fixed-point_combinators_in_lambda_calculus
