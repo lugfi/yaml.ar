@@ -39,7 +39,7 @@ term:
 # ((λk0.λk1...(~)) v0 v1 ...)
 
 # and, given that you like what you read,
-# very terse as a general-purpose language
+# very terse as a general-purpose functional programming language
 
 # the files structure is not yet formalized,
 # but it can be thought of as a mapping between
