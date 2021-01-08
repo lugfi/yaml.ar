@@ -1,3 +1,8 @@
 ? f:
 : none:
   some: f
+---
+? f:
+: either:
+    left: f
+    right: none
