@@ -1,4 +1,7 @@
-? a:
-  b:
-: left: a
-  right: b
+? f:
+  g:
+: left: f
+  right: g
+---
+left: f
+right: g

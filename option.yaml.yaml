@@ -2,7 +2,21 @@
 : none:
   some: f
 ---
+none:
+some: f
+---
 ? f:
 : either:
-    left: f
-    right: none
+    a: none
+    b:
+      some: f
+---
+? f:
+: either:
+    f:
+      some: f
+    g: none
+---
+either:
+  f: some
+  g: none

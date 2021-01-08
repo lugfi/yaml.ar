@@ -5,14 +5,16 @@
   0: x
   # def succ = λn.λf.λx.(f (n f x))
   succ:
-    ? { n: }
+    ? m:
+      n:
     : - f
       -   - n
           - f
           - x
   # def add = λm.λn.λf.λx.(m f (n f x))
   add:
-    ? { m: , n: }
+    ? m:
+      n:
     : - m
       - f
       -   - n
@@ -21,7 +23,8 @@
   # def add' = λm.λn.(m succ n)
   # TODO this doesn't depend on f or x except for succ
   add':
-    ? { m: , n: }
+    ? m:
+      n:
     : - m
       - succ
       - n
