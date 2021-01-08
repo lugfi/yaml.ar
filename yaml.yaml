@@ -6,19 +6,23 @@ node:
   # the ~ scalar might be important enough to warrant its own abstraction
   scalar:
   sequence:
-    - list
-    - index:
-      value:
+    list:
+      head:
+        index:
+        value:
   mapping:
-    - list
-    - key:
-      value:
+    list:
+      head:
+        key:
+        value:
 # https://yaml.org/spec/1.2/spec.html#id2763452
 
 # can be mapped to lambda calculus terms
 term:
   variable:
   abstraction:
+    x:
+    term:
   application:
 # https://en.wikipedia.org/wiki/Lambda_calculus
 # http://www.cs.tau.ac.il/~msagiv/courses/apl12/etc.pdf
@@ -29,6 +33,7 @@ term:
   - node
   - # left-associative application
     # { i -> value_i }
+    scalar: variable
     sequence:
       # is this the syntax for a recursive call in yaml.yaml?
       ~:

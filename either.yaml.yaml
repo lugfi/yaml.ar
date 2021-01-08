@@ -1,2 +1,8 @@
 left: f
 right: g
+
+number:
+  x: right
+
+list:
+  head: right

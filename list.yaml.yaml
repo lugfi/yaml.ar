@@ -1,4 +1,11 @@
 # https://sookocheff.com/post/fp/representing-pairs-and-lists-in-lambda-calculus/
-# def list = λf.(f head tail)
-head: f
-g: tail
+tail: f
+
+number:
+  x: head
+
+bool:
+  false: head
+
+either:
+  g: head

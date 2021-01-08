@@ -1,5 +1,11 @@
-true: f
+f: true
 false: g
+
+number:
+  x: false
+
+list:
+  head: false
 
 # https://medium.com/@marinalimeira/understanding-conditional-expressions-with-%CE%BB-calculus-e25393fef86c
 # def cond = λfirst.λsecond.λc.(c first second)

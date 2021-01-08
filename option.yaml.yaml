@@ -3,3 +3,6 @@ g: none
 
 number:
   x: none
+
+list:
+  head: none

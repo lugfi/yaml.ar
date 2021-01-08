@@ -10,6 +10,12 @@ succ:
         - f
         - x
 
+bool:
+  false: 0
+
+list:
+  head: 0
+
 # def add = λm.λn.λf.λx.(m f (n f x))
 add:
   ? m:
