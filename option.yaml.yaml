@@ -1,22 +1,5 @@
-? f:
-: none:
-  some: f
----
 none:
 some: f
 ---
-? f:
-: either:
-    a: none
-    b:
-      some: f
----
-? f:
-: either:
-    f:
-      some: f
-    g: none
----
 either:
-  f: some
   g: none

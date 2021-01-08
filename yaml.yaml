@@ -4,10 +4,12 @@
 # we demonstrate that certain YAML structures
 node:
   scalar:
-  sequence:
+  sequence: list
   mapping:
-    ? key:
-    : value:
+    pairs:
+      - list
+      - key:
+        value:
 # https://yaml.org/spec/1.2/spec.html#id2763452
 
 # can be mapped to lambda calculus terms
@@ -51,14 +53,13 @@ term:
 # https://www.cs.virginia.edu/~evans/cs655/readings/smalltalk.html
 
 # def Y = λf.((λx.(f (x x))) (λx.(f (x x))))
-# TODO disambiguate YAML falsy values (e.g Y vs true)
-Y:
-  ? { f: }
-  : - ? { x: }
+'Y':
+  ? f:
+  : - ? x:
       : - f
         -   - x
             - x
-    - ? { x: }
+    - ? x:
       : - f
         -   - x
             - x
