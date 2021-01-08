@@ -18,8 +18,8 @@ node:
   scalar:
   sequence:
   mapping:
-  ? key:
-    value:
+    ? key:
+    : value:
 
 # we define a mapping between YAML and lambda calculus
 yaml.yaml:
@@ -50,42 +50,41 @@ bool:
 
 # https://en.wikipedia.org/wiki/Church_encoding
 number:
-? { f: , x: }
-: # def 0 = λf.λx.x
-  0: x
-  # def succ = λn.λf.λx.(f (n f x))
-  succ:
-    ? { n: }
-    : - f
-      -   - n
-          - f
-          - x
-  # def add = λm.λn.λf.λx.(m f (n f x))
-  add:
-    ? { m: , n: }
-    : - m
-      - f
-      -   - n
-          - f
-          - x
-  # def add' = λm.λn.(m succ n)
-  add':
-    ? { m: , n: }
-    : - m
-      - succ
-      - n
-
+  ? { f: , x: }
+  : # def 0 = λf.λx.x
+    0: x
+    # def succ = λn.λf.λx.(f (n f x))
+    succ:
+      ? { n: }
+      : - f
+        -   - n
+            - f
+            - x
+    # def add = λm.λn.λf.λx.(m f (n f x))
+    add:
+      ? { m: , n: }
+      : - m
+        - f
+        -   - n
+            - f
+            - x
+    # def add' = λm.λn.(m succ n)
+    add':
+      ? { m: , n: }
+      : - m
+        - succ
+        - n
 
 # https://en.wikipedia.org/wiki/Fixed-point_combinator#Fixed-point_combinators_in_lambda_calculus
 # def Y = λf.((λx.(f (x x))) (λx.(f (x x))))
 # TODO disambiguate YAML falsy values (e.g Y vs true)
 Y:
-? { f: }
-: - ? { x: }
-    : - f
-      -   - x
-          - x
-  - ? { x: }
-    : - f
-      -   - x
-          - x
+  ? { f: }
+  : - ? { x: }
+      : - f
+        -   - x
+            - x
+    - ? { x: }
+      : - f
+        -   - x
+            - x
