@@ -4,12 +4,13 @@
 # we demonstrate that certain YAML structures
 node:
   scalar:
-  sequence: list
+  sequence:
+    - list
+    - value:
   mapping:
-    pairs:
-      - list
-      - key:
-        value:
+    - list
+    - key:
+      value:
 # https://yaml.org/spec/1.2/spec.html#id2763452
 
 # can be mapped to lambda calculus terms

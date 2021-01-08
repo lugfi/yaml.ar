@@ -1,5 +1,5 @@
-none:
 some: f
----
-either:
-  g: none
+g: none
+
+number:
+  x: none

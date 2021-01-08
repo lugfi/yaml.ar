@@ -1,17 +1,14 @@
-true:
-false:
+true: f
+false: g
+
 # https://medium.com/@marinalimeira/understanding-conditional-expressions-with-%CE%BB-calculus-e25393fef86c
 # def cond = λfirst.λsecond.λc.(c first second)
 cond:
-  ? first:
-    second:
-  : - ~
-    - first
-    - second
+  - ~
+  - first
+  - second
 # def and = λfirst.λsecond.(first second false)
 and:
-  ? first:
-    second:
-  : - first
-    - second
-    - false
+  - first
+  - second
+  - false

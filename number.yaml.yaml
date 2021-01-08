@@ -1,6 +1,7 @@
 # https://en.wikipedia.org/wiki/Church_encoding
 # def 0 = λf.λx.x
 0: x
+
 # def succ = λn.λf.λx.(f (n f x))
 succ:
   ? n:
@@ -8,6 +9,7 @@ succ:
     -   - n
         - f
         - x
+
 # def add = λm.λn.λf.λx.(m f (n f x))
 add:
   ? m:
@@ -17,6 +19,7 @@ add:
     -   - n
         - f
         - x
+
 # def add' = λm.λn.(m succ n)
 # TODO this doesn't depend on f or x except for succ
 add':
