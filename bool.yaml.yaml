@@ -1,5 +1,4 @@
-f: true
-false: g
+0: true
 
 number:
   x: false

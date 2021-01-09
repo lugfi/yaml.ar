@@ -29,30 +29,35 @@ term:
 
 # this homomorphism to lambda calculus proves that
 # yaml.yaml is a turing complete language
+# TODO ~ is the fixed point combinator itself?
 ~:
-  - node
-  - # left-associative application
-    # { i -> value_i }
-    scalar: variable
-    sequence:
-      # is this the syntax for a recursive call in yaml.yaml?
-      ~:
-        mapping:
-          index: key
-    # TODO ~ is the fixed point combinator??
-    # ((λk0.λk1...(~)) v0 v1 ...)
-    mapping: abstraction
-# case mapping:
-#  case all keys are scalars: TODO
-#  case single kvp:
-#   case ~ key: ???
-#   case scalar key:
-#    case ~ value: TODO
-#    case scalar value: TODO
-#    case scalar value: TODO
-#    case scalar value: TODO
-#   case mapping key: TODO
-# http://dev.stephendiehl.com/fun/003_lambda_calculus.html#let
+  - Y
+  - ? f:
+    : scalar: variable
+      sequence:
+        f:
+          mapping:
+            - sequence
+            - index: key
+            # plus ~ to itself?
+      # http://dev.stephendiehl.com/fun/003_lambda_calculus.html#let
+      # ((λk0.λk1...(~)) v0 v1 ...)
+      mapping:
+        - ? key:
+            value:
+          : abstraction:
+              x:
+                key:
+                - scalar: variable
+                  sequence: TODO
+                  mapping:
+                    - key:
+                      value:
+                # TODO case key ~
+                - f: key
+              term:
+                # TODO case value ~
+                - f: value
 
 # and, given that you like what you read,
 # very terse as a general-purpose functional programming language

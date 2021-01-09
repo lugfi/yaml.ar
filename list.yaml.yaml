@@ -1,11 +1,5 @@
 # https://sookocheff.com/post/fp/representing-pairs-and-lists-in-lambda-calculus/
-tail: f
+0: tail:
 
 number:
   x: head
-
-bool:
-  false: head
-
-either:
-  g: head

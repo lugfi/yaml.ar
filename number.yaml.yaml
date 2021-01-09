@@ -1,6 +1,6 @@
 # https://en.wikipedia.org/wiki/Church_encoding
 # def 0 = λf.λx.x
-0: x
+x: 0
 
 # def succ = λn.λf.λx.(f (n f x))
 succ:
@@ -11,10 +11,10 @@ succ:
         - x
 
 bool:
-  false: 0
+  false: x
 
 list:
-  head: 0
+  head: x
 
 # def add = λm.λn.λf.λx.(m f (n f x))
 add:
