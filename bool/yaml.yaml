@@ -1,0 +1,7 @@
+0: true
+
+number:
+  x: false
+
+list:
+  head: false
