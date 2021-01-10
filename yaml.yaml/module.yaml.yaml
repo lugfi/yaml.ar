@@ -21,7 +21,10 @@
     list:
 - variables:
     list:
-      ext:
-        and:
-          - not: yaml.yaml
-          - yaml
+      and:
+        - not:
+            name: yaml.yaml
+        - ext:
+            and:
+              - not: yaml.yaml
+              - yaml
