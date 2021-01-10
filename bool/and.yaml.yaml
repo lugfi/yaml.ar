@@ -1,10 +1,4 @@
-# def and = λ1.λ2.(1 2 false)
-first:
-  0:
-second:
-  1:
-
-~:
-  - first
-  - second
-  - false
+# λp.λq.(p q false)
+- p
+- q
+- false

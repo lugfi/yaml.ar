@@ -1,11 +1,4 @@
-# https://medium.com/@marinalimeira/understanding-conditional-expressions-with-%CE%BB-calculus-e25393fef86c
-# def if = λfirst.λsecond.λc.(c first second)
-first:
-  0:
-second:
-  1:
-
-~:
-  - ~
-  - first
-  - second
+# λp.λa.λb.(p a b)
+- p
+- a
+- b

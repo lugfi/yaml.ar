@@ -1,4 +1,6 @@
-false:
-  0:
-true:
-  f:
+# https://users.monash.edu.au/~lloyd/tildeFP/Lambda/Examples/const-bool/
+a: 0
+b: 1
+
+true: a
+false: b

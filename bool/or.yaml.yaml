@@ -1,0 +1,4 @@
+# λp.λq.(p true q)
+- p
+- true
+- q
