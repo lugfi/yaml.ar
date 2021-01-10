@@ -1,59 +1,38 @@
+# http://dev.stephendiehl.com/fun/003_lambda_calculus.html#let
+
 # the yaml.yaml interpreter written in yaml.yaml
-# this tries to be a comparison to how lisp dialects interpreters are written
-
-# we demonstrate that certain YAML structures
-node:
-  # the ~ scalar might be important enough to warrant its own abstraction
-  scalar: node
-  sequence:
-    list: node
-  mapping:
-    - list
-    - key: node
-      value: node
-# https://yaml.org/spec/1.2/spec.html#id2763452
-
-# can be mapped to lambda calculus terms
-term:
-  variable: term
-  abstraction:
-    x: variable
-    term: term # TODO disambiguate
-  application: term
-# https://en.wikipedia.org/wiki/Lambda_calculus
-# http://www.cs.tau.ac.il/~msagiv/courses/apl12/etc.pdf
+# compare this to how lisp interpreters are written in themselves
 
 # this homomorphism to lambda calculus proves that
 # yaml.yaml is a turing complete language
-# TODO ~ is the fixed point combinator itself?
-~:
-  - Y
-  - ? f:
-    : scalar: variable
-      sequence:
-        f:
-          mapping:
-            - sequence
-            - index: key
-            # plus ~ to itself?
-      # http://dev.stephendiehl.com/fun/003_lambda_calculus.html#let
-      # ((λk0.λk1...(~)) v0 v1 ...)
-      mapping:
-        - ? key:
-            value:
-          : abstraction:
-              x:
-                key:
-                - scalar: variable
-                  sequence: TODO
-                  mapping:
-                    - key:
-                      value:
-                # TODO case key ~
-                - f: key
-              term:
-                # TODO case value ~
-                - f: value
-
 # and, given that you like what you read,
-# very terse as a general-purpose functional programming language
+# also very terse as a general-purpose
+# functional programming language
+
+- Y
+- ? f:
+  : scalar: variable
+    sequence:
+      f:
+        mapping:
+          - sequence
+          - index: key
+          # plus ~ to itself?
+    # http://dev.stephendiehl.com/fun/003_lambda_calculus.html#let
+    # ((λk0.λk1...(~)) v0 v1 ...)
+    mapping:
+      - ? key:
+          value:
+        : abstraction:
+            x:
+              key:
+              - scalar: variable
+                sequence: TODO
+                mapping:
+                  - key:
+                    value:
+              # TODO case key ~
+              - f: key
+            term:
+              # TODO case value ~
+              - f: value

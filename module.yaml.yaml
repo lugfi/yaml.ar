@@ -1,0 +1,31 @@
+# https://www.cs.virginia.edu/~evans/cs655/readings/smalltalk.html
+
+# the file structure is not completely formalized,
+# but it should be intuitive from repetition in existing documents
+
+# the integration with an environment such as an OS, a file system
+# or a Git repository are key to the project evolution
+# e.g a functor from git structure to build system
+# an assumption was necessary for the sake of organization
+
+# the use of ~ is the key to the language conciseness
+# ~ allows referring to a term that's not yet named and
+# ~ can be represented in minimal ways in YAML
+
+file:
+  name: yaml.yaml
+files:
+  list:
+    ext: yaml.yaml
+
+node:
+  mapping:
+    - file:
+        ~: key
+        content:
+          variable: TODO
+          sequence: TODO
+          mapping: TODO
+      files:
+        - basename: key
+          content: value
