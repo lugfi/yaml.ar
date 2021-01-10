@@ -1,0 +1,13 @@
+variable: TODO
+sequence: TODO
+mapping:
+  - file:
+      ~: key
+      content:
+        variable: TODO
+        sequence: TODO
+        mapping: TODO
+    files:
+      - basename: key
+        content: value
+    submodules: TODO

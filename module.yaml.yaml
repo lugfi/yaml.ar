@@ -12,23 +12,10 @@
 # ~ allows referring to a term that's not yet named and
 # ~ can be represented in minimal ways in YAML
 
-file:
-  name: yaml.yaml
-files:
-  list:
-    ext: yaml.yaml
-submodules:
-  list:
-
-node:
-  mapping:
-    - file:
-        ~: key
-        content:
-          variable: TODO
-          sequence: TODO
-          mapping: TODO
-      files:
-        - basename: key
-          content: value
-      submodules: TODO
+- file:
+    name: yaml.yaml
+- files:
+    list:
+      ext: yaml.yaml
+- submodules:
+    list:
