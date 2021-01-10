@@ -1,5 +1,2 @@
-none:
-  0: none
-some:
-  1:
-    f:
+- none
+- some: f

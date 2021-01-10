@@ -1,9 +1,8 @@
 # https://yaml.org/spec/1.2/spec.html#id2763452
 # TODO the ~ scalar might be important enough to warrant its own abstraction
-scalar:
-sequence:
-  list:
-mapping:
-  - list
-  - key:
-    value:
+- scalar
+- sequence: list
+- mapping:
+    list:
+      key:
+      value:

@@ -1,4 +1,2 @@
-left:
-  0:
-right:
-  1:
+- left
+- right

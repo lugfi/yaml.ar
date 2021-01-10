@@ -17,6 +17,8 @@ file:
 files:
   list:
     ext: yaml.yaml
+submodules:
+  list:
 
 node:
   mapping:
@@ -29,3 +31,4 @@ node:
       files:
         - basename: key
           content: value
+      submodules: TODO

@@ -1,14 +1,14 @@
 # https://www.haskell.org/onlinereport/haskell2010/haskellch6.html
 # see 6.3.1 The Eq Class
-==:
-  bool:
-    not:
-      - /=
-      - x
-      - y
-/=: 
-  bool:
-    not:
-      - ==
-      - x
-      - y
+- ==:
+    bool:
+      not:
+        - /=
+        - x
+        - y
+- /=: 
+    bool:
+      not:
+        - ==
+        - x
+        - y
