@@ -2,7 +2,7 @@
 # see 6.3.5 The Functor Class
 # TODO review
 - fmap:
-    - - a
-      - b
-    - f: a
-    - f: b
+  - - a
+    - b
+  - f: a
+  - f: b

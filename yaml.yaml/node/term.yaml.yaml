@@ -1,10 +1,10 @@
-variable: TODO
+scalar: TODO
 sequence: TODO
 mapping:
   - file:
       ~: key
       content:
-        variable: TODO
+        scalar: TODO
         sequence: TODO
         mapping: TODO
     files:
