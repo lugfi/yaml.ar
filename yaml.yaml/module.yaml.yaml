@@ -19,3 +19,9 @@
       ext: yaml.yaml
 - submodules:
     list:
+- variables:
+    list:
+      ext:
+        and:
+          - not: yaml.yaml
+          - yaml

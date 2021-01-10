@@ -11,3 +11,5 @@ mapping:
       - basename: key
         content: value
     submodules: TODO
+    # reading regular YAML files as terms
+    variables: TODO
