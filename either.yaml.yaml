@@ -1,7 +1,4 @@
-0: left
-
-number:
-  x: right
-
-list:
-  head: right
+left:
+  0:
+right:
+  1:

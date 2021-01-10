@@ -1,5 +1,11 @@
 # https://medium.com/@marinalimeira/understanding-conditional-expressions-with-%CE%BB-calculus-e25393fef86c
-# def if = λ1.λ2.λc.(c 1 2)
-- ~
-- 0 # then
-- 1 # else
+# def if = λfirst.λsecond.λc.(c first second)
+first:
+  0:
+second:
+  1:
+
+~:
+  - ~
+  - first
+  - second

@@ -4,26 +4,22 @@
 # we demonstrate that certain YAML structures
 node:
   # the ~ scalar might be important enough to warrant its own abstraction
-  scalar:
+  scalar: node
   sequence:
-    list:
-      head:
-        index:
-        value:
+    list: node
   mapping:
-    list:
-      head:
-        key:
-        value:
+    - list
+    - key: node
+      value: node
 # https://yaml.org/spec/1.2/spec.html#id2763452
 
 # can be mapped to lambda calculus terms
 term:
-  variable:
+  variable: term
   abstraction:
     x: variable
-    term:
-  application:
+    term: term # TODO disambiguate
+  application: term
 # https://en.wikipedia.org/wiki/Lambda_calculus
 # http://www.cs.tau.ac.il/~msagiv/courses/apl12/etc.pdf
 
@@ -61,12 +57,3 @@ term:
 
 # and, given that you like what you read,
 # very terse as a general-purpose functional programming language
-
-# the files structure is not yet formalized,
-# but it can be thought of as a mapping between
-# a key in this file and the name in {name}.yaml.yaml
-
-# the integration with an environment (an OS? a git repository?)
-# should be considered thoroughly
-# an assumption was necessary for the sake of organization
-# https://www.cs.virginia.edu/~evans/cs655/readings/smalltalk.html

@@ -1,17 +1,12 @@
 # https://en.wikipedia.org/wiki/Church_encoding
 # def 0 = λf.λx.x
-0: x
+x:
+  0:
 
 # def succ = λn.λf.λx.(f (n f x))
 succ:
   ? n:
   : - f
-    -   - n
-        - f
-        - x
-
-bool:
-  false: x
-
-list:
-  head: x
+    - - n
+      - f
+      - x

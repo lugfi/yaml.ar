@@ -1,5 +1,5 @@
 # https://sookocheff.com/post/fp/representing-pairs-and-lists-in-lambda-calculus/
-0: tail
-
-number:
-  x: head
+head:
+  0:
+tail:
+  f:

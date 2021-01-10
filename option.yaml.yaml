@@ -1,7 +1,5 @@
-0: some
-
-number:
-  x: none
-
-list:
-  head: none
+none:
+  0: none
+some:
+  1:
+    f:
