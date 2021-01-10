@@ -1,4 +1,6 @@
 # def add' = λm.λn.(m succ n)
+# TODO investigate if a new data could be added for this
+#      since it doesn't depend on f or x
 - m
 - succ
 - n

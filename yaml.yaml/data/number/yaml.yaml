@@ -1,12 +1,16 @@
+# https://hackage.haskell.org/package/number-0.1.1.0/docs/Data-Number.html
 # https://en.wikipedia.org/wiki/Church_encoding
+
+# TODO this doesn't compile
+
 # def 0 = λf.λx.x
-x:
-  0:
+- 0                               # magic happens here
+- succ: a
 
 # def succ = λn.λf.λx.(f (n f x))
 succ:
   ? n:
-  : - f
+  : - a
     - - n
-      - f
+      - a
       - x

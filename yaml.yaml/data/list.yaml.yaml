@@ -1,3 +1,3 @@
 # https://sookocheff.com/post/fp/representing-pairs-and-lists-in-lambda-calculus/
 - head
-- tail: f
+- tail: a
