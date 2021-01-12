@@ -1,15 +1,7 @@
-scalar: TODO
-sequence: TODO
-mapping:
-  - file:
-      ~: key
-      content:
-        scalar: TODO
-        sequence: TODO
-        mapping: TODO
-    files:
-      - basename: key
-        content: value
-    submodules: TODO
-    # reading regular YAML files as terms
-    variables: TODO
+scalar: variable
+sequence:
+  ~:
+    mapping:
+      - sequence # TODO is this the original sequence?
+      - index: key
+mapping: TODO
