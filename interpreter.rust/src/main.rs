@@ -6,11 +6,6 @@ use std::path::Path;
 use std::collections::HashMap;
 use std::error::Error;
 
-// - variable
-// - abstraction:
-//     x: variable
-//     term:
-// - application
 #[derive(Serialize, Deserialize)]
 struct YamlYaml {
     example: YamlTerm,
@@ -23,8 +18,6 @@ enum YamlTerm {
     Abs(HashMap<String, YamlTerm>),    // only one key
     App(Box<YamlTerm>, Box<YamlTerm>), // only two values
 }
-// Abs(u8, Box<Term>),
-// App(Box<Term>, Box<Term>),
 
 impl YamlTerm {
     fn to_term(&self) -> Term {
@@ -43,7 +36,7 @@ impl YamlTerm {
     }
 }
 
-fn read_term_from_file<P: AsRef<Path>>(path: P) -> Result<YamlYaml, Box<Error>> {
+fn read_term_from_file<P: AsRef<Path>>(path: P) -> Result<YamlYaml, Box<dyn Error>> {
     let file = File::open(path)?;
     let reader = BufReader::new(file);
     Ok(serde_yaml::from_reader(reader)?)
