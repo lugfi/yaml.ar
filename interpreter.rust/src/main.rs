@@ -92,18 +92,21 @@ impl Term {
     }
 
     /// Reduce `self` if possible.
-    fn reduce(&mut self) {
+    fn reduce(&mut self) -> bool {
         match self {
             // beta-reduction
-            Term::App(t1, t2) => match &mut **t1 {
+            Term::App(t1, t2) => match t1.as_mut() {
                 Term::Abs(var, body) => {
                     if body.replace(*var, t2) {
                         *self = *body.clone();
+                        true;
                     }
+                    false
                 }
-                _ => (),
+                _ => t1.reduce() || t2.reduce(),
             },
-            _ => (),
+            Term::Abs(_, term) => term.reduce(),
+            _ => false,
         }
     }
 }
