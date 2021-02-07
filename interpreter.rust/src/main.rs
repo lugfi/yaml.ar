@@ -6,12 +6,12 @@ use std::path::Path;
 use std::collections::HashMap;
 use std::error::Error;
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Deserialize)]
 #[serde(untagged)]
 enum YamlTerm {
     Var(String),
-    Abs(HashMap<String, YamlTerm>),    // only one key
-    App(Box<YamlTerm>, Box<YamlTerm>), // only two values
+    Abs(HashMap<String, YamlTerm>), // only one key
+    App(Vec<YamlTerm>),             // only two values
 }
 
 impl YamlTerm {
@@ -22,7 +22,13 @@ impl YamlTerm {
                 let (key, val) = hm.iter().next().unwrap();
                 Term::Abs(key.as_bytes()[0], Box::new(val.to_term()))
             }
-            YamlTerm::App(t0, t1) => Term::App(Box::new(t0.to_term()), Box::new(t1.to_term())),
+            YamlTerm::App(vec) => match vec.as_slice() {
+                [] => panic!(),
+                [term] => term.to_term(),
+                [term0, vec @ ..] => vec.iter().fold(term0.to_term(), |acc, t| {
+                    Term::App(Box::new(acc), Box::new(t.to_term()))
+                }),
+            },
         }
     }
 }
