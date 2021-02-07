@@ -54,6 +54,7 @@ use std::fmt;
 
 #[derive(Clone, Serialize, Deserialize)]
 enum Term {
+    Unit,
     Var(u8),
     Abs(u8, Box<Term>),
     App(Box<Term>, Box<Term>),
@@ -63,6 +64,7 @@ impl Term {
     /// Decide if `var` is free in `self`.
     fn is_free(&self, var: u8) -> bool {
         match self {
+            Term::Unit => true,
             Term::Var(var2) => var == *var2,
             Term::Abs(arg, body) => (var != *arg) && body.is_free(var),
             Term::App(t1, t2) => t1.is_free(var) || t2.is_free(var),
@@ -70,24 +72,27 @@ impl Term {
     }
     /// Replace `var` by `subs` inside `self`. Return `false` if the substitution
     /// did not take place due to issues with free variables.
-    fn replace(&mut self, var: u8, subs: &Term) -> bool {
+    fn replace(&mut self, var: u8, subs: &Term) {
         match self {
+            Term::Unit => (),
             Term::Var(var2) => {
                 if var == *var2 {
                     *self = subs.clone();
                 }
-                true
             }
             Term::Abs(arg, body) => {
                 if var == *arg {
-                    true
+                    ()
                 } else if subs.is_free(*arg) {
-                    false
+                    ()
                 } else {
                     body.replace(var, subs)
                 }
             }
-            Term::App(t1, t2) => t1.replace(var, subs) && t2.replace(var, subs),
+            Term::App(t1, t2) => {
+                t1.replace(var, subs);
+                t2.replace(var, subs);
+            }
         }
     }
 
@@ -97,11 +102,9 @@ impl Term {
             // beta-reduction
             Term::App(t1, t2) => match t1.as_mut() {
                 Term::Abs(var, body) => {
-                    if body.replace(*var, t2) {
-                        *self = *body.clone();
-                        true;
-                    }
-                    false
+                    body.replace(*var, t2);
+                    *self = *body.clone();
+                    true
                 }
                 _ => t1.reduce() || t2.reduce(),
             },
@@ -114,6 +117,7 @@ impl Term {
 impl fmt::Display for Term {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
+            Term::Unit => write!(f, "()"),
             Term::Var(var) => write!(f, "{}", *var as char),
             Term::Abs(var, term) => write!(f, "(λ{}. {})", *var as char, term),
             Term::App(t1, t2) => write!(f, "({} {})", t1, t2),
