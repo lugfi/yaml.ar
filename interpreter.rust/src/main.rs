@@ -6,11 +6,6 @@ use std::path::Path;
 use std::collections::HashMap;
 use std::error::Error;
 
-#[derive(Serialize, Deserialize)]
-struct YamlYaml {
-    example: YamlTerm,
-}
-
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 enum YamlTerm {
@@ -32,7 +27,7 @@ impl YamlTerm {
     }
 }
 
-fn read_term_from_file<P: AsRef<Path>>(path: P) -> Result<YamlYaml, Box<dyn Error>> {
+fn read_term_from_file<P: AsRef<Path>>(path: P) -> Result<YamlTerm, Box<dyn Error>> {
     let file = File::open(path)?;
     let reader = BufReader::new(file);
     Ok(serde_yaml::from_reader(reader)?)
@@ -40,7 +35,7 @@ fn read_term_from_file<P: AsRef<Path>>(path: P) -> Result<YamlYaml, Box<dyn Erro
 
 fn main() {
     let file = read_term_from_file(Path::new("example.yaml")).unwrap();
-    let mut term = file.example.to_term();
+    let mut term = file.to_term();
 
     println!("Original term: {}", term);
     term.reduce();
