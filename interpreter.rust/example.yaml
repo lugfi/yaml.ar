@@ -1,0 +1,5 @@
+example:
+  - x:
+    - y
+    - x
+  - z
