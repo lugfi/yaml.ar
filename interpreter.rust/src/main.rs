@@ -24,13 +24,9 @@ impl YamlTerm {
         match self {
             YamlTerm::Var(var) => Term::Var(var.as_bytes()[0]),
             YamlTerm::Abs(hm) => {
-                if let Some((key, val)) = hm.iter().next() {
-                    Term::Abs(key.as_bytes()[0], Box::new(val.to_term()))
-                } else {
-                    panic!()
-                }
+                let (key, val) = hm.iter().next().unwrap();
+                Term::Abs(key.as_bytes()[0], Box::new(val.to_term()))
             }
-            // Term::Abs(hm.entry(0).key().as_bytes()[0], hm.entry(0).)),
             YamlTerm::App(t0, t1) => Term::App(Box::new(t0.to_term()), Box::new(t1.to_term())),
         }
     }
@@ -45,17 +41,6 @@ fn read_term_from_file<P: AsRef<Path>>(path: P) -> Result<YamlYaml, Box<dyn Erro
 fn main() {
     let file = read_term_from_file(Path::new("example.yaml")).unwrap();
     let mut term = file.example.to_term();
-    // TODO map yaml_yaml to term
-    // let mut term = Term::App(
-    //     Box::new(Term::Abs(
-    //         b'x',
-    //         Box::new(Term::App(
-    //             Box::new(Term::Var(b'y')),
-    //             Box::new(Term::Var(b'x')),
-    //         )),
-    //     )),
-    //     Box::new(Term::Var(b'z')),
-    // );
 
     println!("Original term: {}", term);
     term.reduce();
