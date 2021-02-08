@@ -1,5 +1,6 @@
-- a:
-    b: a
-- b
-# TODO doesn't reduce with this
-# - a
+- x:
+    y:
+      - x
+      - y
+- - y
+  - z
