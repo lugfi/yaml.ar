@@ -60,6 +60,15 @@ enum Term {
 }
 
 impl Term {
+    /// Decide if `var` is free in `self`.
+    fn is_free(&self, var: u8) -> bool {
+        match self {
+            Term::Unit => false,
+            Term::Var(var2) => var == *var2,
+            Term::Abs(arg, body) => (var != *arg) && body.is_free(var),
+            Term::App(t1, t2) => t1.is_free(var) || t2.is_free(var),
+        }
+    }
     /// Replace `var` by `subs` inside `self`
     fn replace(&self, var: u8, subs: Box<Term>) -> Term {
         match self {
@@ -72,29 +81,27 @@ impl Term {
                 }
             }
             Term::Abs(arg, body) => {
-                if var == *arg {
-                    Term::Abs(*arg, Box::new(body.replace(var, subs)))
-                } else {
+                if var != *arg && !subs.is_free(*arg) {
                     body.replace(var, subs)
+                } else {
+                    Term::Abs(*arg, Box::new(body.as_ref().clone()))
                 }
             }
             Term::App(t1, t2) => Term::App(
                 Box::new(t1.replace(var, subs.clone())),
-                Box::new(t2.replace(var, subs)),
+                Box::new(t2.replace(var, subs.clone())),
             ),
         }
     }
 
-    /// Reduce `self` if possible.
+    // https://en.wikipedia.org/wiki/Lambda_calculus#%CE%B2-reduction
     fn reduce(self) -> Term {
         match self {
-            // beta-reduction
             Term::App(t1, t2) => match t1.as_ref() {
                 Term::Abs(var, body) => body.replace(*var, t2),
-                _ => Term::App(Box::new(t1.reduce()), Box::new(t2.reduce())),
+                _ => Term::App(t1, t2),
             },
-            Term::Abs(_, term) => term.reduce(),
-            t => t,
+            _ => self,
         }
     }
 }

@@ -1,19 +1,5 @@
-- x:
-  - y
-  - x
-- z
-
-# and
-# - - p:
-#       q:
-#         - - p
-#           - q
-#         # false
-#         - { a: { b: b} }
-
-# true
-# - { a: { b: a} }
-# false
-# - { a: { b: b} }
-# - y
-# - z
+- a:
+    b: a
+- b
+# TODO doesn't reduce with this
+# - a
