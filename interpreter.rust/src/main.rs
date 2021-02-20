@@ -10,8 +10,8 @@ use std::error::Error;
 #[serde(untagged)]
 enum YamlTerm {
     Var(String),
-    Abs(HashMap<String, YamlTerm>), // only one key
-    App(Vec<YamlTerm>),             // only two values
+    Abs(HashMap<String, YamlTerm>),
+    App(Vec<YamlTerm>),
 }
 
 impl YamlTerm {
@@ -31,6 +31,22 @@ impl YamlTerm {
             },
         }
     }
+    fn to_risp(&self) -> risp::RispExp {
+        match self {
+            YamlTerm::Var(var) => risp::RispExp::Symbol(var.to_string()),
+            YamlTerm::Abs(hm) => {
+                let (key, val) = hm.iter().next().unwrap();
+                risp::RispExp::List(vec![
+                    risp::RispExp::Symbol("fn".to_string()),
+                    risp::RispExp::List(vec![risp::RispExp::Symbol(key.to_string())]),
+                    val.to_risp(),
+                ])
+            }
+            YamlTerm::App(vec) => {
+                risp::RispExp::List(vec.iter().map(|term| term.to_risp()).collect())
+            }
+        }
+    }
 }
 
 fn read_term_from_file<P: AsRef<Path>>(path: P) -> Result<YamlTerm, Box<dyn Error>> {
@@ -42,9 +58,20 @@ fn read_term_from_file<P: AsRef<Path>>(path: P) -> Result<YamlTerm, Box<dyn Erro
 fn main() {
     let file = read_term_from_file(Path::new("example.yaml")).unwrap();
     let term = file.to_term();
-
     println!("Original term: {}", term);
     println!("After reduction: {}", term.reduce());
+
+    let file_risp = &file.to_risp();
+    let env = &mut risp::default_env();
+    match risp::eval(file_risp, env) {
+        Ok(res) => println!("// 🔥 => {}", res),
+        Err(e) => match e {
+            risp::RispErr::Reason(msg) => {
+                println!("// 🙀 => {}", msg);
+                println!("{}", file_risp);
+            }
+        },
+    }
 }
 
 // https://christianpoveda.github.io/blog/untyped-lambda-calculus/
