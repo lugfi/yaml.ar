@@ -1,18 +1,12 @@
 [package]
-name = "interpreter"
+name = "reflection"
 version = "0.1.0"
 authors = ["Martín Coll <martingonzalezcoll@gmail.com>"]
 edition = "2018"
 
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
 [dependencies]
-risp = { path = "./risp" }
-reflection = { path = "./reflection" }
-# TODO might not be needed
 serde = { version = "1.0", features = ["derive"] }
 serde_yaml = "0.8"
-
-[workspace]
-members = [
-    "risp",
-    "reflection",
-]
+serde_test = "1.0.117"

@@ -1,51 +1,43 @@
+use reflection::YamlTerm;
 use serde::{Deserialize, Serialize};
 use std::fs::File;
 use std::io::BufReader;
 use std::path::Path;
 
-use std::collections::HashMap;
 use std::error::Error;
 
-#[derive(Deserialize)]
-#[serde(untagged)]
-enum YamlTerm {
-    Var(String),
-    Abs(HashMap<String, YamlTerm>),
-    App(Vec<YamlTerm>),
-}
-
-impl YamlTerm {
-    fn to_term(&self) -> Term {
-        match self {
-            YamlTerm::Var(var) => Term::Var(var.as_bytes()[0]),
-            YamlTerm::Abs(hm) => {
-                let (key, val) = hm.iter().next().unwrap();
-                Term::Abs(key.as_bytes()[0], Box::new(val.to_term()))
-            }
-            YamlTerm::App(vec) => match vec.as_slice() {
-                [] => panic!(),
-                [term] => term.to_term(),
-                [term0, vec @ ..] => vec.iter().fold(term0.to_term(), |acc, t| {
-                    Term::App(Box::new(acc), Box::new(t.to_term()))
-                }),
-            },
+fn to_term(yaml_term: &YamlTerm) -> Term {
+    match yaml_term {
+        YamlTerm::Var(var) => Term::Var(var.as_bytes()[0]),
+        YamlTerm::Abs(hm) => {
+            let (key, val) = hm.iter().next().unwrap();
+            Term::Abs(key.as_bytes()[0], Box::new(to_term(val)))
         }
+        YamlTerm::App(vec) => match vec.as_slice() {
+            [] => panic!(),
+            [term] => to_term(term),
+            [term0, vec @ ..] => vec.iter().fold(to_term(term0), |acc, t| {
+                Term::App(Box::new(acc), Box::new(to_term(t)))
+            }),
+        },
     }
-    fn to_risp(&self) -> risp::RispExp {
-        match self {
-            YamlTerm::Var(var) => risp::RispExp::Symbol(var.to_string()),
-            YamlTerm::Abs(hm) => {
-                let (key, val) = hm.iter().next().unwrap();
-                risp::RispExp::List(vec![
-                    risp::RispExp::Symbol("fn".to_string()),
-                    risp::RispExp::List(vec![risp::RispExp::Symbol(key.to_string())]),
-                    val.to_risp(),
-                ])
-            }
-            YamlTerm::App(vec) => {
-                risp::RispExp::List(vec.iter().map(|term| term.to_risp()).collect())
-            }
+}
+fn to_risp(yaml_term: &YamlTerm) -> risp::RispExp {
+    match yaml_term {
+        YamlTerm::Var(var) => risp::RispExp::Symbol(var.to_string()),
+        YamlTerm::Abs(hm) => {
+            let (key, val) = hm.iter().next().unwrap();
+            risp::RispExp::List(vec![
+                risp::RispExp::Symbol("fn".to_string()),
+                risp::RispExp::List(vec![risp::RispExp::Symbol(key.to_string())]),
+                to_risp(val),
+            ])
         }
+        YamlTerm::App(vec) => match vec.as_slice() {
+            [] => panic!(),
+            [term] => to_risp(term),
+            terms => risp::RispExp::List(terms.iter().map(|term| to_risp(term)).collect()),
+        },
     }
 }
 
@@ -57,13 +49,13 @@ fn read_term_from_file<P: AsRef<Path>>(path: P) -> Result<YamlTerm, Box<dyn Erro
 
 fn main() {
     let file = read_term_from_file(Path::new("example.yaml")).unwrap();
-    let term = file.to_term();
+    let term = to_term(&file);
     println!("Original term: {}", term);
     println!("After reduction: {}", term.reduce());
 
-    let file_risp = &file.to_risp();
+    let file_risp = to_risp(&file);
     let env = &mut risp::default_env();
-    match risp::eval(file_risp, env) {
+    match risp::eval(&file_risp, env) {
         Ok(res) => println!("// 🔥 => {}", res),
         Err(e) => match e {
             risp::RispErr::Reason(msg) => {
