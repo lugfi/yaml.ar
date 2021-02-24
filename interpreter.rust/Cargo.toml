@@ -6,7 +6,7 @@ edition = "2018"
 
 [dependencies]
 risp = { path = "./risp" }
-reflection = { path = "./reflection" }
+risp-yaml = { path = "./risp-yaml" }
 # TODO might not be needed
 serde = { version = "1.0", features = ["derive"] }
 serde_yaml = "0.8"
@@ -14,5 +14,6 @@ serde_yaml = "0.8"
 [workspace]
 members = [
     "risp",
-    "reflection",
+    "risp-yaml",
+    "serde-yaml-reflection",
 ]
