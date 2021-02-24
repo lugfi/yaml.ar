@@ -5,6 +5,5 @@ fn main() {
     eval_file(Path::new("examples/e1.yaml"));
     eval_file(Path::new("examples/e2.yaml"));
     eval_file(Path::new("examples/e3.yaml"));
-    eval_file(Path::new("examples/e4.yaml"));
-    eval_file(Path::new("examples/e5-abstraction.yaml"));
+    eval_file(Path::new("examples/e4-abstraction.yaml"));
 }

@@ -5,7 +5,7 @@ authors = ["Martín Coll <martingonzalezcoll@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-risp = { path = "./risp" }
+risp = "0.7.0"
 risp-yaml = { path = "./risp-yaml" }
 # TODO might not be needed
 serde = { version = "1.0", features = ["derive"] }
@@ -13,7 +13,6 @@ serde_yaml = "0.8"
 
 [workspace]
 members = [
-    "risp",
     "risp-yaml",
     "serde-yaml-reflection",
 ]

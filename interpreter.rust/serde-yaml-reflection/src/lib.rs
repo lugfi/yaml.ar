@@ -6,7 +6,7 @@ use std::collections::HashMap;
 #[serde(untagged)]
 pub enum YamlTerm {
     Var(String),
-    VarF64(f64),
+    VarI64(i64),
     Abs(HashMap<String, YamlTerm>),
     App(Vec<YamlTerm>),
 }
