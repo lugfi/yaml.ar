@@ -5,6 +5,7 @@ authors = ["Martín Coll <martingonzalezcoll@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+reflection = { path = "./serde-yaml-reflection" }
 risp = "0.7.0"
 risp-yaml = { path = "./risp-yaml" }
 # TODO might not be needed
