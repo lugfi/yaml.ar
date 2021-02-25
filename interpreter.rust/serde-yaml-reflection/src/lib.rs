@@ -1,14 +1,15 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use std::collections::HashMap;
 
-#[derive(Deserialize, PartialEq, Debug)]
+// https://docs.rs/yaml-rust/0.4.5/yaml_rust/yaml/enum.Yaml.html
+#[derive(Serialize, Deserialize)]
 #[serde(untagged)]
-pub enum YamlTerm {
-    Var(String),
-    VarI64(i64),
-    Abs(HashMap<String, YamlTerm>),
-    App(Vec<YamlTerm>),
+pub enum Yaml {
+    Integer(i64),
+    String(String),
+    Array(Vec<Yaml>),
+    Hash(HashMap<String, Yaml>),
 }
 
 #[cfg(test)]
@@ -19,7 +20,7 @@ mod tests {
     #[test]
     fn variable_term() {
         serde_test::assert_de_tokens(
-            &YamlTerm::Var("variable".to_owned()),
+            &Yaml::String("variable".to_owned()),
             &[Token::Str("variable")],
         );
     }
@@ -27,11 +28,11 @@ mod tests {
     #[test]
     fn abstraction_of_a_single_variable() {
         serde_test::assert_de_tokens(
-            &YamlTerm::Abs({
+            &Yaml::Abs({
                 let mut map = HashMap::new();
                 map.insert(
                     "bound_variable".to_owned(),
-                    YamlTerm::Var("target_expression".to_owned()),
+                    Yaml::Var("target_expression".to_owned()),
                 );
                 map
             }),
@@ -47,10 +48,7 @@ mod tests {
     #[test]
     fn application_of_two_variables() {
         serde_test::assert_de_tokens(
-            &YamlTerm::App(vec![
-                YamlTerm::Var("x".to_owned()),
-                YamlTerm::Var("y".to_owned()),
-            ]),
+            &Yaml::App(vec![Yaml::Var("x".to_owned()), Yaml::Var("y".to_owned())]),
             // this represents [ x, y ]
             &[
                 Token::Seq { len: Some(2) },
