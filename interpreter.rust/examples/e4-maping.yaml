@@ -1,0 +1,14 @@
+- do
+
+- - def
+  - add-one
+  - x: [+, 1, x]
+
+- - def
+  - add-two
+  - x: [+, 2, x]
+
+# 6
+- - add-one
+  - - add-two
+    - 3
