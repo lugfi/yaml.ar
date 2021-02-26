@@ -9,7 +9,7 @@ pub fn eval_file(path: &Path, env: &mut Environment) {
 
     let file_risp = to_risp(&file);
     match eval(file_risp, env) {
-        Ok(res) => println!("// 🔥 => {:?}", res),
-        Err(e) => println!("// 🙀 => {:?}", e),
+        Ok(res) => println!("🔥 {:?}", res),
+        Err(e) => println!("🙀 {:?}", e),
     }
 }
