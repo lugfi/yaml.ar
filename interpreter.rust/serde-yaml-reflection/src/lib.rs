@@ -6,7 +6,8 @@ use std::collections::HashMap;
 #[derive(Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Yaml {
-    Integer(i64),
+    Integer(usize),
+    // Integer(i64),
     String(String),
     Array(Vec<Yaml>),
     Hash(HashMap<String, Yaml>),
