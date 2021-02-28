@@ -2,7 +2,7 @@ use reflection::Yaml;
 use std::fs::File;
 use std::io::BufReader;
 use lambda_calculus::*;
-use lambda_calculus::data::num::church::sub;
+use lambda_calculus::data::num::church;
 use std::path::Path;
 
 use std::error::Error;
@@ -16,16 +16,13 @@ pub fn read_term_from_file<P: AsRef<Path>>(path: P) -> Result<Yaml, Box<dyn Erro
 pub fn to_lambda_calculus(yaml_term: &Yaml) -> Term {
     match yaml_term {
         Yaml::String(var) => match var.as_ref() {
-            "-" => sub(),
-            _ => parse(var, DeBruijn).expect("variable"),
+            "+" => church::add(),
+            "-" => church::sub(),
+            _ => panic!("variables are numbers because we use de Bruijn notation"),
         }
         Yaml::Integer(var) => var.into_church(),
-        Yaml::Hash(hm) => {
-            // https://www.cs.cornell.edu/courses/cs4110/2018fa/lectures/lecture15.pdf
-            // following de Bruijn we just discard the name
-            let (_key, val) = hm.iter().next().unwrap();
-            abs!(1, to_lambda_calculus(val))
-        }
+        // https://www.cs.cornell.edu/courses/cs4110/2018fa/lectures/lecture15.pdf
+        Yaml::Hash(_) => panic!("variables are numbers because we use de Bruijn notation"),
         Yaml::Array(vec) => match vec.as_slice() {
             [term] => to_lambda_calculus(term),
             [lhs, rhs] => app(to_lambda_calculus(lhs), to_lambda_calculus(rhs)),

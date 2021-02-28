@@ -1,4 +1,4 @@
-# λp.λq.(p q false)
-- p
-- q
+# λp.λq.(p q false) = λλ.(1 0 false)
+- 1
+- 0
 - false

@@ -6,6 +6,11 @@
 # also very terse as a general-purpose
 # functional programming language
 
+# https://www.win.tue.nl/automath/archive/pdf/aut029.pdf
+# section 14. ALGORITHMS gave me an idea about the meaning.
+# of mappings and variable names. those are given as free variable
+# lists that carry semantics and are only understood by humans.
+
 scalar: variable
 sequence:
   - mapping:
