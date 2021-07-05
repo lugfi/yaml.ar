@@ -1,0 +1,27 @@
+# examples from https://github.com/shybyte/risp
+- do
+
+# ; Define a function
+# (defn double [x] (* x 2))
+- - def
+  - double
+  - x: ['*', x, 2]
+
+# ; Function which returns a function (some call it a closure), which adds x1 to its single argument
+# (defn create_adder [x1]
+#   (fn [x2] (+ x1 x2)))
+- - def
+  - create_adder
+  - x1:
+      x2: [+, x1, x2]
+
+# (def add_20 (create_adder 20))
+- - def
+  - add_20
+  - - create_adder
+    - 20
+
+# 220
+- - add_20
+  - - double
+    - 100

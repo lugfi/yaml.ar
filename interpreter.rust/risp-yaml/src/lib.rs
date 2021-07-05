@@ -1,3 +1,4 @@
+use std::convert::TryInto;
 use reflection::Yaml;
 use risp::types::RispType;
 use std::fs::File;
@@ -15,7 +16,7 @@ pub fn read_term_from_file<P: AsRef<Path>>(path: P) -> Result<Yaml, Box<dyn Erro
 pub fn to_risp(yaml_term: &Yaml) -> RispType {
     match yaml_term {
         Yaml::String(var) => RispType::Symbol(var.to_string()),
-        Yaml::Integer(var) => RispType::Int(*var),
+        Yaml::Integer(var) => RispType::Int((*var).try_into().unwrap()),
         Yaml::Hash(hm) => {
             let (key, val) = hm.iter().next().unwrap();
             RispType::List(vec![

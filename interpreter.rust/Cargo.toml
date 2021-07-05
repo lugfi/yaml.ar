@@ -5,6 +5,8 @@ authors = ["Martín Coll <martingonzalezcoll@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+lambda_calculus = "^3.0"
+lambda-calculus-yaml = { path = "./lambda-calculus-yaml" }
 reflection = { path = "./serde-yaml-reflection" }
 risp = "0.7.0"
 risp-yaml = { path = "./risp-yaml" }
@@ -14,6 +16,7 @@ serde_yaml = "0.8"
 
 [workspace]
 members = [
+    "lambda-calculus-yaml",
     "risp-yaml",
     "serde-yaml-reflection",
 ]

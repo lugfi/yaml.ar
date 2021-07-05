@@ -1,3 +1,6 @@
 # https://users.monash.edu.au/~lloyd/tildeFP/Lambda/Examples/const-bool/
-- true: a
-- false: b
+# and in de Bruijn notation:
+#   true  := λa.λb.a = λλ.1
+#   false := λa.λb.a = λλ.0
+- false
+- true
